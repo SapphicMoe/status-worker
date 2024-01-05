@@ -33,13 +33,14 @@ To create a status, send a `POST` request to `/` with the following options:
 
 For example:
 
-```json
+```bash
 lily@sapphic-angels:~$ curl -X POST \
   -H "Authorization: mysecret" \
   -H "Content-Type: application/json" \
   -d '{"title": "Status title", "body": "Status content"}' \
   https://status.example.com
-
+```
+```json
 {
   "message": "Successfully created a new status.",
   "status": {
@@ -58,9 +59,10 @@ On Windows, you might encounter issues with the command prompt interpreting cert
 
 To view your latest status, send a `GET` request to `/`.
 
-```json
+```bash
 lily@sapphic-angels:~$ curl https://status.example.com/
-
+```
+```json
 {
   "status": {
     "id": "3c523f18-f20c-48df-acba-b330f11e66da",
@@ -73,9 +75,10 @@ lily@sapphic-angels:~$ curl https://status.example.com/
 
 To view a specific status, send a `GET` request to that specific ID.
 
-```json
+```bash
 lily@sapphic-angels:~$ curl https://status.example.com/5250f13c-fa8a-458c-b09b-8523d86d5428
-
+```
+```json
 {
   "status": {
     "id": "5250f13c-fa8a-458c-b09b-8523d86d5428",
@@ -88,9 +91,10 @@ lily@sapphic-angels:~$ curl https://status.example.com/5250f13c-fa8a-458c-b09b-8
 
 To view all created statuses, send a `GET` request to `/list`.
 
-```json
+```bash
 lily@sapphic-angels:~$ curl https://status.example.com/list
-
+```
+```json
 {
   "statuses": [
     {
@@ -113,13 +117,14 @@ lily@sapphic-angels:~$ curl https://status.example.com/list
 
 To update a specific status, send a `PUT` request to that specific status ID.
 
-```json
+```bash
 lily@sapphic-angels:~$ curl -X PUT \
   -H "Authorization: mysecret" \
   -H "Content-Type: application/json" \
   -d '{"title": "Updated status title", "body": "Updated status content"}' \
   https://status.example.com/3c523f18-f20c-48df-acba-b330f11e66da
-
+```
+```json
 {
   "message": "Status updated successfully.",
   "status": {
@@ -135,11 +140,12 @@ lily@sapphic-angels:~$ curl -X PUT \
 
 To delete a specific status, send a `DELETE` request to that specific status ID.
 
-```json
+```bash
 lily@sapphic-angels:~$ curl -X DELETE \
   -H "Authorization: mysecret" \
   https://status.example.com/3c523f18-f20c-48df-acba-b330f11e66da
-
+```
+```json
 {
   "message": "Status deleted successfully.",
   "status": {
