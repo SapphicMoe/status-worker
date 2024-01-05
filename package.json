@@ -1,0 +1,22 @@
+{
+  "name": "status-worker",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "A simple service that allows you to manage your status.",
+  "author": "Chloe Arciniega <solely@riseup.net>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "addsecret": "wrangler secret put STATUS_SECRET",
+    "createkv": "wrangler kv:namespace create kv && echo '^^^ Replace the binding on line 12 of wrangler.toml with this' ^^^",
+    "dev": "wrangler dev src/index.ts",
+    "deploy": "wrangler deploy --minify src/index.ts"
+  },
+  "dependencies": {
+    "hono": "^3.11.12"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20231218.0",
+    "wrangler": "^3.22.0"
+  }
+}

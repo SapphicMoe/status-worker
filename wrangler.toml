@@ -1,0 +1,12 @@
+name = "status-project"
+main = "src/index.ts"
+
+kv_namespaces = [
+  { binding = "kv", preview_id = "147a005e2024459b8c565a7ce2eea851", id = "653f254d105543aa8c1d04db6d571424" },
+]
+
+compatibility_flags = []
+compatibility_date = "2023-01-01"
+
+workers_dev = false
+route = { pattern = "status.solstice.tf/*", zone_name = "solstice.tf" }
