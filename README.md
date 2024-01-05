@@ -4,12 +4,17 @@ A simple service for Cloudflare Workers that allows you to display your current 
 
 ## Deploy
 
+Wrangler 3 is required, though `pnpm` commands should automatically take care of that for you.
+
 Run these commands in their respective order:
 
 - `pnpm install`
 - `pnpm addsecret`
 - `pnpm createkv`
 - `pnpm deploy`
+
+To deploy to your Cloudflare Workers account, edit the entries in the `wrangler.toml` file.  
+Then, add a secret using `wrangler secret put STATUS_SECRET`, and deploy via `pnpm deploy`.
 
 ## Debugging
 

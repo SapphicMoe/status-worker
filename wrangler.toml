@@ -1,6 +1,7 @@
 name = "status-worker"
 main = "src/index.ts"
 
+# Change these!
 kv_namespaces = [
   { binding = "kv", preview_id = "147a005e2024459b8c565a7ce2eea851", id = "653f254d105543aa8c1d04db6d571424" },
 ]
@@ -8,5 +9,6 @@ kv_namespaces = [
 compatibility_flags = []
 compatibility_date = "2023-01-01"
 
+# Remove (or comment out) the route line if using workers_dev (and set below to true)
 workers_dev = false
 route = { pattern = "status.solstice.tf/*", zone_name = "solstice.tf" }
