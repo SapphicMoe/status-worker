@@ -1,5 +1,4 @@
 import { Hono, Context as HonoContext } from "hono";
-import { cors } from "hono/cors";
 import * as model from "./model";
 import type { Param } from "./model";
 
@@ -39,43 +38,70 @@ app.use("*", async (c, next) => {
 });
 
 // main logic
-app.use("/statuses/*", cors());
-
-app.get("/statuses", async (c) => {
+app.get("/list", async (c) => {
   const statuses = await model.getStatuses(c.env.kv);
+
+  if (!statuses.length) {
+    return c.json(
+      {
+        code: "404 Not Found",
+        message: "No statuses have been created.",
+      },
+      404
+    );
+  }
 
   return c.json({ statuses });
 });
 
-app.get("/status", async (c) => {
+app.get("/", async (c) => {
   const statuses = await model.getStatuses(c.env.kv);
+
+  if (!statuses.length) {
+    return c.json(
+      {
+        code: "404 Not Found",
+        message: "No statuses have been created.",
+      },
+      404
+    );
+  }
+
   const latestStatus = statuses[0];
 
   return c.json({ status: latestStatus });
 });
 
-app.post("/status", async (c) => {
+app.post("/", async (c) => {
+  let param: Param;
+
   try {
-    const param: Param = await c.req.json();
-    if (!(param && param.title && param.body))
-      return c.json(
-        { message: "Please provide a title and body for the status." },
-        400
-      );
-
-    const status = await model.createStatus(c.env.kv, param);
-
-    return c.json({ message: "Successfully created a new status.", status });
-  } catch (e) {
-    if (e instanceof Error)
-      return c.json(
-        { message: "Cannot create new status.", error: e.message },
-        422
-      );
+    param = await c.req.json();
+  } catch {
+    return c.json(
+      {
+        code: "400 Bad Request",
+        message: "Please provide a JSON body for the status.",
+      },
+      400
+    );
   }
+
+  if (!(param.title && param.body))
+    return c.json(
+      {
+        code: "400 Bad Request",
+        message: "Please provide a title and body for the status.",
+      },
+      400
+    );
+
+  const status = await model.createStatus(c.env.kv, param);
+
+  return c.json({ message: "Successfully created a new status.", status }, 201);
 });
 
-app.get("/status/:id", async (c) => {
+app.get("/:id", async (c) => {
   const id = c.req.param("id");
 
   const status = await model.getStatus(c.env.kv, id);
@@ -92,7 +118,7 @@ app.get("/status/:id", async (c) => {
   return c.json({ status });
 });
 
-app.put("/status/:id", async (c) => {
+app.put("/:id", async (c) => {
   const id = c.req.param("id");
 
   const status = await model.getStatus(c.env.kv, id);
@@ -115,7 +141,17 @@ app.put("/status/:id", async (c) => {
   });
 });
 
-app.delete("/status/:id", async (c) => {
+app.delete("/", async (c) =>
+  c.json(
+    {
+      code: "400 Bad Request",
+      message: "Please provide a status ID to delete.",
+    },
+    400
+  )
+);
+
+app.delete("/:id", async (c) => {
   const id = c.req.param("id");
 
   const status = await model.getStatus(c.env.kv, id);
@@ -141,7 +177,7 @@ app.post("/*", async (c) =>
   c.json(
     {
       code: "405 Method Not Allowed",
-      message: "POST not valid for individual keys. Did you mean PUT?",
+      message: "POST not valid for individual statuses. Did you mean PUT?",
     },
     405
   )
