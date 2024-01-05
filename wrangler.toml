@@ -1,4 +1,4 @@
-name = "status-project"
+name = "status-worker"
 main = "src/index.ts"
 
 kv_namespaces = [
