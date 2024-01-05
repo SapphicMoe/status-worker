@@ -1,6 +1,6 @@
 # status-worker
 
-A simple service for Cloudflare Workers that allows you to display your current status!
+A simple service for Cloudflare Workers that allows you to display your current status to others with ease!
 
 ## Deploy
 
@@ -34,7 +34,11 @@ To create a status, send a `POST` request to `/` with the following options:
 For example:
 
 ```json
-lily@sapphic-angels:~$ curl -X POST -H "Authorization: mysecret" -H "Content-Type: application/json" -d '{"title": "Status title", "body": "Status content"}' https://status.example.com/
+lily@sapphic-angels:~$ curl -X POST \
+  -H "Authorization: mysecret" \
+  -H "Content-Type: application/json" \
+  -d '{"title": "Status title", "body": "Status content"}' \
+  https://status.example.com
 
 {
   "message": "Successfully created a new status.",
@@ -52,7 +56,7 @@ On Windows, you might encounter issues with the command prompt interpreting cert
 
 ### Viewing a status
 
-To view your current status, send a `GET` request to `/`.
+To view your latest status, send a `GET` request to `/`.
 
 ```json
 lily@sapphic-angels:~$ curl https://status.example.com/
@@ -60,9 +64,24 @@ lily@sapphic-angels:~$ curl https://status.example.com/
 {
   "status": {
     "id": "3c523f18-f20c-48df-acba-b330f11e66da",
-    "title": "meow",
-    "body": "curl test 2",
+    "title": "Status title",
+    "body": "Status content",
     "date": "2024-01-05T12:16:55.479Z"
+  }
+}
+```
+
+To view a specific status, send a `GET` request to that specific ID.
+
+```json
+lily@sapphic-angels:~$ curl https://status.example.com/5250f13c-fa8a-458c-b09b-8523d86d5428
+
+{
+  "status": {
+    "id": "5250f13c-fa8a-458c-b09b-8523d86d5428",
+    "title": "Example",
+    "body": "test test",
+    "date": "2024-01-05T12:17:05.118Z"
   }
 }
 ```
@@ -95,7 +114,11 @@ lily@sapphic-angels:~$ curl https://status.example.com/list
 To update a specific status, send a `PUT` request to that specific status ID.
 
 ```json
-lily@sapphic-angels:~$ curl -X PUT -H "Authorization: mysecret" -H "Content-Type: application/json" -d '{"title": "Updated status title", "body": "Updated status content"}' https://status.example.com/3c523f18-f20c-48df-acba-b330f11e66da
+lily@sapphic-angels:~$ curl -X PUT \
+  -H "Authorization: mysecret" \
+  -H "Content-Type: application/json" \
+  -d '{"title": "Updated status title", "body": "Updated status content"}' \
+  https://status.example.com/3c523f18-f20c-48df-acba-b330f11e66da
 
 {
   "message": "Status updated successfully.",
@@ -113,8 +136,9 @@ lily@sapphic-angels:~$ curl -X PUT -H "Authorization: mysecret" -H "Content-Type
 To delete a specific status, send a `DELETE` request to that specific status ID.
 
 ```json
-lily@sapphic-angels:~$ curl -X DELETE -H "Authorization: meowmeow" localhost:8787/3c523f18-f20c-48df-acba-b33
-0f11e66da
+lily@sapphic-angels:~$ curl -X DELETE \
+  -H "Authorization: mysecret" \
+  https://status.example.com/3c523f18-f20c-48df-acba-b330f11e66da
 
 {
   "message": "Status deleted successfully.",
