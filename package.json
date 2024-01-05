@@ -1,6 +1,6 @@
 {
   "name": "status-worker",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "type": "module",
   "description": "A simple service that allows you to manage your status.",
   "author": "Chloe Arciniega <solely@riseup.net>",
