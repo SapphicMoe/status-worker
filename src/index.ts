@@ -1,4 +1,5 @@
 import { Hono, Context as HonoContext } from "hono";
+import { cors } from "hono/cors";
 import * as model from "./model";
 import type { Param } from "./model";
 
@@ -15,6 +16,8 @@ type Env = {
 type Context = HonoContext<Env>;
 
 const app = new Hono<Env>();
+
+app.use("*", cors());
 
 // auth
 const checkAuth = (c: Context) =>
